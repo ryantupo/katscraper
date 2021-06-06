@@ -16,8 +16,13 @@ def check_url(url):
     mycursor.execute(f"SELECT COUNT(1) FROM images WHERE link ='{url}'")
     amount_of_matches = mycursor.fetchall()
     
-    print ("the amount of matches ????" , amount_of_matches)
-    if len(amount_of_matches) > 0:
+    print ("the amount of matches ????" , str(amount_of_matches))
+    print ("the amount of matches ????" , len(amount_of_matches))
+    
+    list_of_matches = amount_of_matches[0]
+    
+    
+    if (list_of_matches[0]) > 0:
         return True
     else:
         return False
