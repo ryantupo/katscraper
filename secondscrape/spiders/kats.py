@@ -1,11 +1,14 @@
 import scrapy
 import mysql.connector
+from secondscrape.database.db_connection import *;
+
+
 
 
 class kats(scrapy.Spider):
     
 
-
+    
     name = "kats"
     start_urls = ["https://www.pinterest.co.uk/joyishkennedy4/kit-kat-pics/"]
 
@@ -19,22 +22,30 @@ class kats(scrapy.Spider):
 
             if any(extension in url for extension in [".jpg", ".gif", ".png"]):
             
-                if "{url}" not in image_links:
-                    html += """<a href="{url}"
-                    target="_blank"><img src="{url}"
-                    height="33%"
-                    width="33%"/><a/>""".format(url=url)
 
-                    with open("frontpage.html", "a") as page:
-                        page.write(html)
-                        page.close()
-                    
+                html += """<a href="{url}"
+                target="_blank"><img src="{url}"
+                height="33%"
+                width="33%"/><a/>""".format(url=url)
+                
+                print ("sdfdsenbflsdfhnbsdkjfnsdopjnfsjdknfolpjksdnfjksdslondfnsdk;nfs;dknfksd")
 
-                    with open("frontpage.json", "a") as page:
-                        page.write(html)
-                        page.close()
-                    
-                    image_links.append("{url}")
+                add_image(url)
+                
+                
+
+                with open("frontpage.html", "a") as page:
+                    page.write(html)
+                    page.close()
+                
+
+                with open("frontpage.json", "a") as page:
+                    page.write(html)
+                    page.close()
+                
+                image_links.append("{url}")
+
+                
             
             next_page = response.css('li.next a::attr(href)').get()
             if next_page is not None:
