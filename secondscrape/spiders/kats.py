@@ -14,7 +14,6 @@ class kats(scrapy.Spider):
 
     def parse(self, response):
         
-        
         image_links = []
         links = response.xpath("//img/@src")
         url_links = response.xpath("//a/@href")
@@ -25,11 +24,11 @@ class kats(scrapy.Spider):
             
             if any(extension in url for extension in [".html", ".php"]):
                 
-                print ("did we find any links?")
+                print ("External Link Found")
                 add_link(url)
             else:
                 add_link("https://www.pinterest.co.uk" + url)
-                print ("this is what the url looked like", url)
+                print ("Internal EndPoint Found", url)
 
         for link in links:
             url = link.get()
@@ -41,17 +40,18 @@ class kats(scrapy.Spider):
                 height="33%"
                 width="33%"/><a/>""".format(url=url)
 
-
                 add_image(url)
                 
-
                 log_data(html)
 
                 image_links.append("{url}")
+                
+        # for link in return_link_list:
+        #     yield response.follow(link.get(), callback=self.parse)
 
-            # next_page = response.css('li.next a::attr(href)').get()
-            # if next_page is not None:
-            #     next_page = response.urljoin(next_page)
-            #     yield scrapy.Request(next_page, callback=self.parse)
+        next_page = response.css('li.next a::attr(href)').get()
+        if next_page is not None:
+            next_page = response.urljoin(next_page)
+            yield scrapy.Request(next_page, callback=self.parse)
 
 

@@ -11,7 +11,9 @@ db = mysql.connector.connect(
 
 mycursor = db.cursor()
 
-
+def return_link_list():
+    mycursor.execute(f"SELECT * FROM links")
+    return mycursor.fetchall()    
 
 
 
