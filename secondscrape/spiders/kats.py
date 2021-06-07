@@ -21,11 +21,15 @@ class kats(scrapy.Spider):
         html = ""
         
         for url_link in url_links:
-            url = link.get()
+            url = url_link.get()
             
             if any(extension in url for extension in [".html", ".php"]):
                 
+                print ("did we find any links?")
                 add_link(url)
+            else:
+                add_link("https://www.pinterest.co.uk" + url)
+                print ("this is what the url looked like", url)
 
         for link in links:
             url = link.get()

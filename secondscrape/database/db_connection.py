@@ -11,6 +11,11 @@ db = mysql.connector.connect(
 
 mycursor = db.cursor()
 
+
+
+
+
+
 def check_url(url):
     mycursor.execute(f"SELECT COUNT(1) FROM images WHERE link ='{url}'")
     
@@ -41,19 +46,19 @@ def commit_data():
 
 def add_image(Link):
     if check_url(Link) == False:
-        print ("WE GOT AN IMAGE BABY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        print ("Image Found")
         mycursor.execute(f"INSERT INTO Images (link) VALUES ('{Link}')")
         commit_data()
     else:
-        print ("duplicate")   
+        print ("duplicate Image found")   
         
 def add_link(Link):
     if check_link(Link) == False:
-        print ("WE GOT A LINK BABY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        print ("Link found")
         mycursor.execute(f"INSERT INTO links (link) VALUES ('{Link}')")
         commit_data()
     else:
-        print ("duplicate")   
+        print ("duplicate Link found")   
          
 def print_table():
     mycursor.execute("SELECT * FROM Images")
